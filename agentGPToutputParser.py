@@ -9,7 +9,7 @@ def extract_responses(input_file, output_file):
             except UnicodeDecodeError:
                 pass
 
-    pattern = r'Completing:(.*?)Added task'
+    pattern = r'Completing:(.*?)(Added task|No more subtasks for:)'
     responses = re.findall(pattern, text, re.DOTALL)
 
     print(f"Found {len(responses)} responses")
@@ -18,7 +18,7 @@ def extract_responses(input_file, output_file):
         outfile.write("Compiled Responses:\n\n")
         for i, response in enumerate(responses, 1):
             outfile.write(f"Response {i}:\n")
-            outfile.write(response.strip())
+            outfile.write(response[0].strip())
             outfile.write("\n\n")
             print(f"Wrote response {i}")
 
